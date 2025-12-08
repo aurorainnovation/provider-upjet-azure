@@ -62,11 +62,9 @@ jobs:
         # This step rebuilds the package (using the base image from previous step) and pushes it.
         # We override RELEASE_BRANCH_FILTER to allow publishing from any branch.
         run: |
-          make publish \
+          make -C cluster/images/provider-azure img.publish \
             SUBPACKAGES=network \
-            REGISTRY_ORGS=ghcr.io/aurorainnovation \
             XPKG_REG_ORGS=ghcr.io/aurorainnovation \
             VERSION=${{ steps.target_branch.outputs.branch }} \
-            RELEASE_BRANCH_FILTER='%' \
             PLATFORMS=linux_amd64 \
             BATCH_PLATFORMS=linux_amd64
