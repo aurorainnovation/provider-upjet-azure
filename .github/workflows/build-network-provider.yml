@@ -56,7 +56,7 @@ jobs:
         # This step builds the base image and the provider package locally.
         # We need the base image for the publish step.
         run: |
-          make build-provider.network VERSION=${{ steps.target_branch.outputs.branch }}
+          make build-provider.network VERSION=${{ steps.target_branch.outputs.branch }} PLATFORMS=linux_amd64
 
       - name: Publish Network Provider
         # This step rebuilds the package (using the base image from previous step) and pushes it.
@@ -67,4 +67,6 @@ jobs:
             REGISTRY_ORGS=ghcr.io/aurorainnovation \
             XPKG_REG_ORGS=ghcr.io/aurorainnovation \
             VERSION=${{ steps.target_branch.outputs.branch }} \
-            RELEASE_BRANCH_FILTER='%'
+            RELEASE_BRANCH_FILTER='%' \
+            PLATFORMS=linux_amd64 \
+            BATCH_PLATFORMS=linux_amd64
