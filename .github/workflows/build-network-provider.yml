@@ -55,16 +55,22 @@ jobs:
       - name: Build Network Provider Base Image
         # This step builds the base image and the provider package locally.
         # We need the base image for the publish step.
+        env:
+          BATCH_PLATFORMS: linux_amd64
         run: |
           make build-provider.network VERSION=${{ steps.target_branch.outputs.branch }} PLATFORMS=linux_amd64
 
       - name: Publish Network Provider
         # This step rebuilds the package (using the base image from previous step) and pushes it.
         # We override RELEASE_BRANCH_FILTER to allow publishing from any branch.
+        # Setting BATCH_PLATFORMS as env var ensures it's properly inherited by all sub-make calls.
+        env:
+          BATCH_PLATFORMS: linux_amd64
         run: |
-          make -C cluster/images/provider-azure img.publish \
+          make publish \
             SUBPACKAGES=network \
+            REGISTRY_ORGS=ghcr.io/aurorainnovation \
             XPKG_REG_ORGS=ghcr.io/aurorainnovation \
             VERSION=${{ steps.target_branch.outputs.branch }} \
-            PLATFORMS=linux_amd64 \
-            BATCH_PLATFORMS=linux_amd64
+            RELEASE_BRANCH_FILTER='%' \
+            PLATFORMS=linux_amd64
