@@ -1,0 +1,64 @@
+name: Build and Push Network Provider
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Target branch to build (leave empty to use the branch this workflow is run from)'
+        required: false
+        type: string
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Set target branch
+        id: target_branch
+        run: |
+          if [ -n "${{ inputs.branch }}" ]; then
+            echo "branch=${{ inputs.branch }}" >> $GITHUB_OUTPUT
+          else
+            echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.target_branch.outputs.branch }}
+          submodules: true
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.1'
+
+      - name: Vendor Dependencies
+        run: make vendor
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Network Provider Base Image
+        # This step builds the base image and the provider package locally.
+        # We need the base image for the publish step.
+        run: |
+          make build-provider.network VERSION=${{ steps.target_branch.outputs.branch }}
+
+      - name: Publish Network Provider
+        # This step rebuilds the package (using the base image from previous step) and pushes it.
+        # We override RELEASE_BRANCH_FILTER to allow publishing from any branch.
+        run: |
+          make publish \
+            SUBPACKAGES=network \
+            REGISTRY_ORGS=ghcr.io/aurorainnovation \
+            XPKG_REG_ORGS=ghcr.io/aurorainnovation \
+            VERSION=${{ steps.target_branch.outputs.branch }} \
+            RELEASE_BRANCH_FILTER='%'
