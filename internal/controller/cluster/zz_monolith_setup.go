@@ -438,7 +438,6 @@ import (
 	accountmaps "github.com/upbound/provider-azure/v2/internal/controller/cluster/maps/account"
 	creator "github.com/upbound/provider-azure/v2/internal/controller/cluster/maps/creator"
 	marketplaceagreement "github.com/upbound/provider-azure/v2/internal/controller/cluster/marketplaceordering/marketplaceagreement"
-	spatialanchorsaccount "github.com/upbound/provider-azure/v2/internal/controller/cluster/mixedreality/spatialanchorsaccount"
 	accountnetapp "github.com/upbound/provider-azure/v2/internal/controller/cluster/netapp/account"
 	pool "github.com/upbound/provider-azure/v2/internal/controller/cluster/netapp/pool"
 	snapshotnetapp "github.com/upbound/provider-azure/v2/internal/controller/cluster/netapp/snapshot"
@@ -547,6 +546,7 @@ import (
 	virtualhubip "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualhubip"
 	virtualhubroutetable "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualhubroutetable"
 	virtualhubroutetableroute "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualhubroutetableroute"
+	virtualhubroutingintent "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualhubroutingintent"
 	virtualhubsecuritypartnerprovider "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualhubsecuritypartnerprovider"
 	virtualnetworknetwork "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualnetwork"
 	virtualnetworkdnsservers "github.com/upbound/provider-azure/v2/internal/controller/cluster/network/virtualnetworkdnsservers"
@@ -1181,7 +1181,6 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		accountmaps.Setup,
 		creator.Setup,
 		marketplaceagreement.Setup,
-		spatialanchorsaccount.Setup,
 		accountnetapp.Setup,
 		pool.Setup,
 		snapshotnetapp.Setup,
@@ -1290,6 +1289,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		virtualhubip.Setup,
 		virtualhubroutetable.Setup,
 		virtualhubroutetableroute.Setup,
+		virtualhubroutingintent.Setup,
 		virtualhubsecuritypartnerprovider.Setup,
 		virtualnetworknetwork.Setup,
 		virtualnetworkdnsservers.Setup,
@@ -1930,7 +1930,6 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		accountmaps.SetupGated,
 		creator.SetupGated,
 		marketplaceagreement.SetupGated,
-		spatialanchorsaccount.SetupGated,
 		accountnetapp.SetupGated,
 		pool.SetupGated,
 		snapshotnetapp.SetupGated,
@@ -2039,6 +2038,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		virtualhubip.SetupGated,
 		virtualhubroutetable.SetupGated,
 		virtualhubroutetableroute.SetupGated,
+		virtualhubroutingintent.SetupGated,
 		virtualhubsecuritypartnerprovider.SetupGated,
 		virtualnetworknetwork.SetupGated,
 		virtualnetworkdnsservers.SetupGated,

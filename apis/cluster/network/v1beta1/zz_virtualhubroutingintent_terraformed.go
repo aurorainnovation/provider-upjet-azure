@@ -14,18 +14,18 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this SpatialAnchorsAccount
-func (mg *SpatialAnchorsAccount) GetTerraformResourceType() string {
-	return "azurerm_spatial_anchors_account"
+// GetTerraformResourceType returns Terraform resource type for this VirtualHubRoutingIntent
+func (mg *VirtualHubRoutingIntent) GetTerraformResourceType() string {
+	return "azurerm_virtual_hub_routing_intent"
 }
 
-// GetConnectionDetailsMapping for this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) GetObservation() (map[string]any, error) {
+// GetObservation of this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -34,8 +34,8 @@ func (tr *SpatialAnchorsAccount) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) SetObservation(obs map[string]any) error {
+// SetObservation for this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -43,16 +43,16 @@ func (tr *SpatialAnchorsAccount) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) GetID() string {
+// GetID returns ID of underlying Terraform resource of this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) GetParameters() (map[string]any, error) {
+// GetParameters of this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (tr *SpatialAnchorsAccount) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) SetParameters(params map[string]any) error {
+// SetParameters for this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -70,8 +70,8 @@ func (tr *SpatialAnchorsAccount) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (tr *SpatialAnchorsAccount) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this SpatialAnchorsAccount
-func (tr *SpatialAnchorsAccount) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this VirtualHubRoutingIntent
+func (tr *VirtualHubRoutingIntent) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource \"%s/%s\"", tr.GetNamespace(), tr.GetName())
@@ -110,10 +110,10 @@ func (tr *SpatialAnchorsAccount) GetMergedParameters(shouldMergeInitProvider boo
 	return params, nil
 }
 
-// LateInitialize this SpatialAnchorsAccount using its observed tfState.
+// LateInitialize this VirtualHubRoutingIntent using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *SpatialAnchorsAccount) LateInitialize(attrs []byte) (bool, error) {
-	params := &SpatialAnchorsAccountParameters{}
+func (tr *VirtualHubRoutingIntent) LateInitialize(attrs []byte) (bool, error) {
+	params := &VirtualHubRoutingIntentParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -124,6 +124,6 @@ func (tr *SpatialAnchorsAccount) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *SpatialAnchorsAccount) GetTerraformSchemaVersion() int {
+func (tr *VirtualHubRoutingIntent) GetTerraformSchemaVersion() int {
 	return 0
 }
